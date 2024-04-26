@@ -5,7 +5,12 @@ function Button({ text, onClick }) {
 }
 
 function StatisticLine({ text, value }) {
-  return <p>{text} {value}</p>
+  return (
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
+  )
 }
 
 function Statistics({ good, neutral, bad }) {
@@ -27,12 +32,16 @@ function Statistics({ good, neutral, bad }) {
     <div>
       <h1>Statistics</h1>
       <div>
-        <StatisticLine text="Good" value={good} />
-        <StatisticLine text="Neutral" value={neutral} />
-        <StatisticLine text="Bad" value={bad} />
-        <StatisticLine text="All" value={total} />
-        <StatisticLine text="Average" value={average} />
-        <StatisticLine text="Positive" value={`${positive * 100} %`} />
+        <table>
+          <tbody>
+            <StatisticLine text="Good" value={good} />
+            <StatisticLine text="Neutral" value={neutral} />
+            <StatisticLine text="Bad" value={bad} />
+            <StatisticLine text="All" value={total} />
+            <StatisticLine text="Average" value={average} />
+            <StatisticLine text="Positive" value={`${positive * 100} %`} />
+          </tbody>
+        </table>
       </div>
     </div>
   )
