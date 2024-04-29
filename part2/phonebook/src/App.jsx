@@ -37,9 +37,14 @@ function App() {
       id: persons.length + 1
     }
 
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNumber('')
+    axios
+      .post('http://localhost:3001/persons', personObject)
+      .then(res => {
+        setPersons(persons.concat(res.data))
+        setNewName('')
+        setNumber('')
+      })
+
   }
 
   return (
