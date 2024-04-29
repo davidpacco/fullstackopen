@@ -34,7 +34,6 @@ function App() {
     const personObject = {
       name: newName,
       number: number,
-      id: persons.length + 1
     }
 
     personService
@@ -44,6 +43,17 @@ function App() {
         setNewName('')
         setNumber('')
       })
+  }
+
+  const removePersonOf = id => {
+    const person = persons.find(person => person.id === id)
+    const isConfirmed = window.confirm(`Delete ${person.name}?`)
+
+    if (isConfirmed) {
+      personService
+        .remove(id)
+        .then(() => setPersons(persons.filter(person => person.id !== id)))
+    }
   }
 
   return (
@@ -58,7 +68,7 @@ function App() {
 
       <h2>Numbers</h2>
 
-      <Persons persons={filteredPersons} />
+      <Persons persons={filteredPersons} removePerson={removePersonOf} />
     </div>
   )
 }

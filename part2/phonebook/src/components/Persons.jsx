@@ -1,8 +1,10 @@
-export function Persons({ persons }) {
+export function Persons({ persons, removePerson }) {
   return (
     <ul>
       {persons.map(person =>
-        <li key={person.id}>{person.name} {person.number}</li>
+        <li key={person.id}>
+          {person.name} {person.number} <button onClick={() => removePerson(person.id)}>delete</button>
+        </li>
       )}
     </ul>
   )
