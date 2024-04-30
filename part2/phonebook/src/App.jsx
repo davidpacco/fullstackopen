@@ -3,13 +3,15 @@ import personService from './services/persons'
 import { Filter } from './components/Filter'
 import { PersonForm } from './components/PersonForm'
 import { Persons } from './components/Persons'
-
+import { Notification } from './components/Notification'
+import './index.css'
 
 function App() {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [number, setNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [message, setMessage] = useState(null)
   const filteredPersons = filter
     ? persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
     : persons
@@ -41,6 +43,8 @@ function App() {
         personService
           .update(personInPhoneBook.id, personObject)
           .then(returnedPerson => {
+            setMessage(`Added ${returnedPerson.name}`)
+            setTimeout(() => setMessage(null), 5000)
             setPersons(persons.map(person => person.id !== personInPhoneBook.id ? person : returnedPerson))
             setNewName('')
             setNumber('')
@@ -53,6 +57,8 @@ function App() {
     personService
       .create(personObject)
       .then(returnedPerson => {
+        setMessage(`Added ${returnedPerson.name}`)
+        setTimeout(() => setMessage(null), 5000)
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNumber('')
@@ -73,6 +79,8 @@ function App() {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message={message} />
 
       <Filter filter={filter} onChange={handleFilterChange} />
 
