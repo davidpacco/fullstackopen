@@ -11,7 +11,7 @@ function App() {
   const [newName, setNewName] = useState('')
   const [number, setNumber] = useState('')
   const [filter, setFilter] = useState('')
-  const [message, setMessage] = useState(null)
+  const [message, setMessage] = useState({ type: null, text: null })
   const filteredPersons = filter
     ? persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
     : persons
@@ -43,11 +43,16 @@ function App() {
         personService
           .update(personInPhoneBook.id, personObject)
           .then(returnedPerson => {
-            setMessage(`Added ${returnedPerson.name}`)
-            setTimeout(() => setMessage(null), 5000)
+            setMessage({ type: 'success', text: `Added ${returnedPerson.name}` })
+            setTimeout(() => setMessage({ type: null, text: null }), 5000)
             setPersons(persons.map(person => person.id !== personInPhoneBook.id ? person : returnedPerson))
             setNewName('')
             setNumber('')
+          })
+          .catch(() => {
+            setMessage({ type: 'error', text: `Information of ${personInPhoneBook.name} has already been removed from server` })
+            setTimeout(() => setMessage({ type: null, text: null }), 5000)
+            setPersons(persons.filter(person => person.id !== personInPhoneBook.id))
           })
       }
 
@@ -57,8 +62,8 @@ function App() {
     personService
       .create(personObject)
       .then(returnedPerson => {
-        setMessage(`Added ${returnedPerson.name}`)
-        setTimeout(() => setMessage(null), 5000)
+        setMessage({ type: 'success', text: `Added ${returnedPerson.name}` })
+        setTimeout(() => setMessage({ type: null, text: null }), 5000)
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNumber('')

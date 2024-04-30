@@ -1,9 +1,9 @@
 export function Notification({ message }) {
-  if (message === null) return null
+  if (message.type === null) return null
 
   return (
-    <div className="notification">
-      {message}
+    <div className={`message ${message.type}`}>
+      {message.text}
     </div>
   )
 }
