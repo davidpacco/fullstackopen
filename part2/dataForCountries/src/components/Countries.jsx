@@ -1,4 +1,4 @@
-export function Countries({ countries, setFilteredCountries }) {
+export function Countries({ countries, weather, setFilteredCountries }) {
   if (countries.length === 0) return null
 
   if (countries.length > 10) return <div>Too many matches, specify another filter</div>
@@ -17,6 +17,12 @@ export function Countries({ countries, setFilteredCountries }) {
           </ul>
         </div>
         <img src={country.flags.png} alt={`${country.flag.alt} flag`} />
+        <div>
+          <h3>Weather in {country.capital}</h3>
+          <p>Temperature {weather?.main.temp} Celcius</p>
+          <img src={`https://openweathermap.org/img/wn/${weather?.weather[0].icon}@2x.png`} alt="" />
+          <p>Wind {weather?.wind.speed} m/s</p>
+        </div>
       </div>
     )
   }
